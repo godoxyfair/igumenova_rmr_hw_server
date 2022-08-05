@@ -26,11 +26,14 @@ alt successful case
     deactivate Login
     deactivate User
 ||45||
-else unsuccessful case
+else user data incorrect
     Database --> Login: User data rejected
     Login -> Login: Redirect
     Login --> User: invalid message()
 ||45||
+else cookie is not set
+    Database --> Login: cookie is not set
+    Login --> User: 401 status message
 end
 
 
