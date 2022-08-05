@@ -14,12 +14,16 @@ note right: или лучше разделить мыло и телефон на
 alt validate data in client side
     Login -> Login: Checking the email input is correct
     Login -> Login: Checking the phone input is correct
-    Login -> User: Correct message
+    Login -> Login: Checking the password input is correct
+    Login -> User: Correct
 ||45||
 else incorrect input email/phone
     Login -> Login: Email input verification is incorrect
+    Login -> User: incorrect message <<Провверьте правильность email>>
     Login -> Login: Phone input verification is incorrect
-    Login -> User: incorrect message
+    Login -> User: incorrect message <<Телефон только RUS/MN>>
+    Login -> Login: Password input verification is incorrect
+    Login -> User: incorrect message <<Пароль должен быть не менее 4 символов>>
 ||45||
 end
 deactivate Login
@@ -35,18 +39,18 @@ alt successful case user data is correct
     deactivate Database
     activate Login
     Login -> Login : Redirect
-    Login --> User: Accepted()
+    Login --> User: Accepted()<<Вот ваш кот>>
     deactivate Login
     deactivate User
 ||45||
 else user data incorrect
     Database --> Login: User data rejected
     Login -> Login: Redirect
-    Login --> User: invalid message()
+    Login --> User: invalid message() <<Котики не для вас>>
 ||45||
 else cookie is not set
     Database --> Login: cookie is not set
-    Login --> User: 401 status message
+    Login --> User: status(401) <<401 status message>>
 ||45||
 end
 
