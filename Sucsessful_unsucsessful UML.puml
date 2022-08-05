@@ -24,7 +24,7 @@ alt validate data in client side
 ||45||
 else incorrect input email/phone
     Login -> Login: Email input verification is incorrect
-    Login -> User: incorrect message \n <<Провверьте правильность email>>
+    Login -> User: incorrect message \n <<Провверьте правильность формата email>>
     Login -> Login: Phone input verification is incorrect
     Login -> User: incorrect message \n <<Телефон только RUS/MN>>
     Login -> Login: Password input verification is incorrect
