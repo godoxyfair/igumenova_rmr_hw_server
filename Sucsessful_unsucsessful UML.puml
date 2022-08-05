@@ -2,13 +2,18 @@
 'https://plantuml.com/sequence-diagram
 
 autonumber
+title User login sequence diagram
 actor User
 participant Login
 database  Database
 activate User
 activate Login
+
+skinparam sequenceMessageAlign center
+
 User -> Login: Visit
 User -> Login : Enter email/phone/password
+== Client side validation ==
 note left: или лучше loop
 note right: или лучше разделить мыло и телефон на кейсы
 alt validate data in client side
@@ -19,18 +24,22 @@ alt validate data in client side
 ||45||
 else incorrect input email/phone
     Login -> Login: Email input verification is incorrect
-    Login -> User: incorrect message <<Провверьте правильность email>>
+    Login -> User: incorrect message \n <<Провверьте правильность email>>
     Login -> Login: Phone input verification is incorrect
-    Login -> User: incorrect message <<Телефон только RUS/MN>>
+    Login -> User: incorrect message \n <<Телефон только RUS/MN>>
     Login -> Login: Password input verification is incorrect
-    Login -> User: incorrect message <<Пароль должен быть не менее 4 символов>>
+    Login -> User: incorrect message \n <<Пароль должен быть не менее 4 символов>>
 ||45||
 end
+
 deactivate Login
 User -> Login : login()
+
 activate Login
 Login -> Database: Send email/phone/password hash
+== Server side validation ==
 deactivate Login
+
 activate Database
 Database -> Database: Validate user data
 
