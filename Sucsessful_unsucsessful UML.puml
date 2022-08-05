@@ -10,6 +10,7 @@ activate User
 activate Login
 
 skinparam sequenceMessageAlign center
+skinparam style strictuml
 
 
 User -> Login : Enter email/phone/password
