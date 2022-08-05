@@ -8,16 +8,29 @@ database  Database
 activate User
 activate Login
 User -> Login: Visit
-User -> Login : Enter username/password
+User -> Login : Enter email/phone/password
+note left: или лучше loop
+note right: или лучше разделить мыло и телефон на кейсы
+alt validate data in client side
+    Login -> Login: Checking the email input is correct
+    Login -> Login: Checking the phone input is correct
+    Login -> User: Correct message
+||45||
+else incorrect input email/phone
+    Login -> Login: Email input verification is incorrect
+    Login -> Login: Phone input verification is incorrect
+    Login -> User: incorrect message
+||45||
+end
 deactivate Login
 User -> Login : login()
 activate Login
-Login -> Database: Send username/password hash
+Login -> Database: Send email/phone/password hash
 deactivate Login
 activate Database
 Database -> Database: Validate user data
 
-alt successful case
+alt successful case user data is correct
     Database --> Login : User data accepted
     deactivate Database
     activate Login
@@ -34,7 +47,7 @@ else user data incorrect
 else cookie is not set
     Database --> Login: cookie is not set
     Login --> User: 401 status message
+||45||
 end
-
 
 @enduml
