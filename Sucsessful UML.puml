@@ -1,0 +1,37 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+actor User
+participant Login
+database  Database
+activate User
+activate Login
+User -> Login: Visit
+User -> Login : Enter username/password
+deactivate Login
+User -> Login : login()
+activate Login
+Login -> Database: Send username/password hash
+deactivate Login
+activate Database
+Database -> Database: Validate user data
+
+alt successful case
+    Database --> Login : User data accepted
+    deactivate Database
+    activate Login
+    Login -> Login : Redirect
+    Login --> User: Accepted()
+    deactivate Login
+    deactivate User
+||45||
+else unsuccessful case
+    Database --> Login: User data rejected
+    Login -> Login: Redirect
+    Login --> User: invalid message()
+||45||
+end
+
+
+@enduml
