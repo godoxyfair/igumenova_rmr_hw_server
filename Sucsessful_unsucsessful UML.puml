@@ -53,10 +53,16 @@ alt successful case user data is correct
     deactivate User
 ||45||
 else user data incorrect
-    Database --> Login: User data rejected
+    Database --> Login: User data rejected invalid password
     Login -> Login: Redirect
     note left: осветить ли проверку существования пользователя\n или сразу писать что котик недоступен\n на сколько умен сервер?
-    Login --> User: invalid message() <<Котики не для вас или вы ввели не правильные данные>>
+    Login --> User: invalid message() <<Котик не для вас или вы ввели не правильные данные>>
+    Login --> User: clear password field()
+||45||
+else user data does not exist
+    Database --> Login: User email/phone does not exist
+    Login -> Login: Redirect
+    Login --> User: invalid message() <<Такого пользователя не существует>>
     Login --> User: clear password field()
 ||45||
 else cookie is not set
