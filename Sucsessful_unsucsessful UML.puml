@@ -14,8 +14,8 @@ skinparam sequenceMessageAlign center
 User -> Login: Visit
 User -> Login : Enter email/phone/password
 == Client side validation ==
-note left: или лучше loop
 note right: или лучше разделить мыло и телефон на кейсы
+note left: или лучше loop
 alt validate data in client side
     Login -> Login: Checking the email input is correct
     Login -> Login: Checking the phone input is correct
