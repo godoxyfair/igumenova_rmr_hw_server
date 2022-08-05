@@ -56,7 +56,7 @@ else user data incorrect
     Database --> Login: User data rejected invalid password
     Login -> Login: Redirect
     note left: осветить ли проверку существования пользователя\n или сразу писать что котик недоступен\n на сколько умен сервер?
-    Login --> User: invalid message() <<Котик не для вас или вы ввели не правильные данные>>
+    Login --> User: invalid message() <<Котик не для вас или вы ввели не правильный пароль>>
     Login --> User: clear password field()
 ||45||
 else user data does not exist
