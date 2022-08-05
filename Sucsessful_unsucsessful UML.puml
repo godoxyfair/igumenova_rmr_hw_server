@@ -4,71 +4,72 @@
 autonumber
 title User login sequence diagram
 actor User
-participant Login
+participant SPA
+participant Server
 database  Database
 activate User
-activate Login
+
 
 skinparam sequenceMessageAlign center
 skinparam style strictuml
 
 
-User -> Login : Enter email/phone/password
+User -> SPA : Enter email/phone/password
 == Client side validation ==
-note right: или лучше разделить мыло и телефон на кейсы
-note left: или лучше loop
+
 alt validate data in client side
-    Login -> Login: Checking the email input is correct
-    Login -> Login: Checking the phone input is correct
-    Login -> Login: Checking the password input is correct
-    Login --> User: Correct
+    SPA -> SPA: Checking the email input is correct
+    SPA -> SPA: Checking the phone input is correct
+    SPA -> SPA: Checking the password input is correct
+    SPA --> User: Correct
 ||45||
 else incorrect input email/phone
-    Login -> Login: Email input verification is incorrect
-    Login --> User: incorrect message \n <<Провверьте правильность формата email>>
-    Login -> Login: Phone input verification is incorrect
-    Login --> User: incorrect message \n <<Телефон только RUS/MN>>
-    Login -> Login: Password input verification is incorrect
-    Login --> User: incorrect message \n <<Пароль должен быть не менее 4 символов>>
+    SPA -> SPA: Email input verification is incorrect
+    SPA --> User: incorrect message \n <<Провверьте правильность формата email>>
+    SPA -> SPA: Phone input verification is incorrect
+    SPA --> User: incorrect message \n <<Телефон только RUS/MN>>
+    SPA -> SPA: Password input verification is incorrect
+    SPA --> User: incorrect message \n <<Пароль должен быть не менее 4 символов>>
 ||45||
 end
 
-deactivate Login
-User -> Login : login()
+deactivate SPA
+User -> SPA : login()
 
-activate Login
-Login -> Database: Send email/phone/password hash
+activate SPA
+SPA -> Server: Send email/phone/password hash
 == Server side validation ==
-deactivate Login
+deactivate SPA
 
+activate Server
+Server -> Database: Validate user data
 activate Database
-Database -> Database: Validate user data
-
+Database --> Server: query data comparison()
+deactivate Database
 alt successful case user data is correct
-    Database -> Login : User data accepted
-    deactivate Database
-    activate Login
-    Login -> Login : Redirect
-    Login --> User: Accepted()<<Вот ваш кот>>
-    deactivate Login
+    Server -> SPA : User data accepted
+    deactivate Server
+    activate SPA
+    SPA -> SPA : Redirect
+    SPA --> User: Accepted()<<Вот ваш кот>>
+    deactivate SPA
     deactivate User
 ||45||
 else user data incorrect
-    Database --> Login: User data rejected invalid password
-    Login -> Login: Redirect
-    note left: осветить ли проверку существования пользователя\n или сразу писать что котик недоступен\n на сколько умен сервер?
-    Login --> User: invalid message() <<Котик не для вас или вы ввели не правильный пароль>>
-    Login --> User: clear password field()
+    Server --> SPA: User data rejected invalid password
+    SPA -> SPA: Redirect
+    SPA --> User: invalid message() <<Котик не для вас или вы ввели не правильный пароль>>
+    SPA --> User: clear password field()
 ||45||
 else user data does not exist
-    Database --> Login: User email/phone does not exist
-    Login -> Login: Redirect
-    Login --> User: invalid message() <<Такого пользователя не существует>>
-    Login --> User: clear password field()
+    Server --> SPA: User email/phone does not exist
+    SPA -> SPA: Redirect
+    SPA --> User: invalid message() <<Такого пользователя не существует>>
+    SPA --> User: clear password field()
 ||45||
 else cookie is not set
-    Database --> Login: cookie is not set
-    Login --> User: status(401) <<401 status message>>
+    Server --> SPA: cookie is not set
+    SPA --> User: status(401) <<401 status message>>
 ||45||
 end
 
