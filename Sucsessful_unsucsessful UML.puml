@@ -11,7 +11,7 @@ activate Login
 
 skinparam sequenceMessageAlign center
 
-User -> Login: Visit
+
 User -> Login : Enter email/phone/password
 == Client side validation ==
 note right: или лучше разделить мыло и телефон на кейсы
@@ -20,15 +20,15 @@ alt validate data in client side
     Login -> Login: Checking the email input is correct
     Login -> Login: Checking the phone input is correct
     Login -> Login: Checking the password input is correct
-    Login -> User: Correct
+    Login --> User: Correct
 ||45||
 else incorrect input email/phone
     Login -> Login: Email input verification is incorrect
-    Login -> User: incorrect message \n <<Провверьте правильность формата email>>
+    Login --> User: incorrect message \n <<Провверьте правильность формата email>>
     Login -> Login: Phone input verification is incorrect
-    Login -> User: incorrect message \n <<Телефон только RUS/MN>>
+    Login --> User: incorrect message \n <<Телефон только RUS/MN>>
     Login -> Login: Password input verification is incorrect
-    Login -> User: incorrect message \n <<Пароль должен быть не менее 4 символов>>
+    Login --> User: incorrect message \n <<Пароль должен быть не менее 4 символов>>
 ||45||
 end
 
@@ -44,7 +44,7 @@ activate Database
 Database -> Database: Validate user data
 
 alt successful case user data is correct
-    Database --> Login : User data accepted
+    Database -> Login : User data accepted
     deactivate Database
     activate Login
     Login -> Login : Redirect
