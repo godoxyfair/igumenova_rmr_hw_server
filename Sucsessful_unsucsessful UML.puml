@@ -55,7 +55,9 @@ alt successful case user data is correct
 else user data incorrect
     Database --> Login: User data rejected
     Login -> Login: Redirect
-    Login --> User: invalid message() <<Котики не для вас>>
+    note left: осветить ли проверку существования пользователя\n или сразу писать что котик недоступен\n на сколько умен сервер?
+    Login --> User: invalid message() <<Котики не для вас или вы ввели не правильные данные>>
+    Login --> User: clear password field()
 ||45||
 else cookie is not set
     Database --> Login: cookie is not set
