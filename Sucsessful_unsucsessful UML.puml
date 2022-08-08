@@ -56,20 +56,17 @@ alt successful case user data is correct
     Server --> SPA: Send Cookie
     deactivate Server
     SPA <-- SPA: Save cookie
-    SPA -> SPA : Redirect
     SPA --> User: Accepted()<<Вот ваш кот>>
     deactivate SPA
     deactivate User
 ||45||
 else user data incorrect
     Server --> SPA: User data rejected invalid password 403 error
-    SPA -> SPA: Redirect
     SPA --> User: invalid message() <<Котик не для вас или вы ввели не правильный пароль>>
     SPA --> User: clear password field()
 ||45||
 else user data does not exist
     Server --> SPA: User email/phone does not exist 403 error
-    SPA -> SPA: Redirect
     SPA --> User: invalid message() <<Такого пользователя не существует>>
     SPA --> User: clear password field()
 ||45||
