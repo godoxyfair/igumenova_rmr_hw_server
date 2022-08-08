@@ -42,14 +42,20 @@ SPA -> Server: Send email/phone/password hash
 deactivate SPA
 
 activate Server
-Server -> Database: Validate user data
+Server -> Database: query data()
 activate Database
-Database --> Server: query data comparison()
+Database --> Server: email verify/password_verify()
 deactivate Database
+
 alt successful case user data is correct
+    Server -> Server: Validate and comparison user data
     Server -> SPA : User data accepted
-    deactivate Server
     activate SPA
+    Server -> Server: session_start()
+    Server -> Server: Set-Cookie
+    Server --> SPA: Send Cookie
+    deactivate Server
+    SPA <-- SPA: Save cookie
     SPA -> SPA : Redirect
     SPA --> User: Accepted()<<Вот ваш кот>>
     deactivate SPA
